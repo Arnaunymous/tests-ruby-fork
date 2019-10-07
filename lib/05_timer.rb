@@ -3,7 +3,6 @@ def time_string(string)
 return Time.at(string).utc.strftime("%H:%M:%S")
 end
 
-#  https://stackoverflow.com/questions/4175733/convert-duration-to-hoursminutesseconds-or-similar-in-rails-3-or-ruby
 
 # fonctionne aussi tres bien : 
 
