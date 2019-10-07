@@ -1,19 +1,35 @@
-def translate(word) 
-    if word.start_with?('a','e','i','o','u') 
-    word<<'ay' 
-    else 
-    pos=nil 
-    ['a','e','i','o','u'].each do |vowel| 
-     pos = word.index(vowel) 
-     break unless pos.nil? 
-    end 
-    unless pos.nil? 
-     pre = word.partition(word[pos,1]).first 
-     word.slice!(pre) 
-     word<<pre+'ay' 
-    else 
-     #code to be executed when no vowels are there in the word 
-     #eg words fry,dry 
-    end 
-    end 
-end 
+def translate(text)
+    words = text.split " "
+    result_list = []
+
+    result_list = words.map {|word| translate_single(word)}
+    result_list.join " "
+end
+
+def translate_single(text)
+    consonants = "bcdfghjklmnpqrstvwxyz" #def consonants
+    word = text.split ""        
+    
+    if consonants.include? word.first
+        consonant = true
+        letter = word.shift
+        ending = ""
+        while consonant and word.length > 0
+            if letter.downcase + word.first.downcase == "qu"#if consonants qu
+                ending += letter + word.shift
+                letter = word.first
+            elsif consonants.include? letter
+                ending += letter    
+            end
+
+            if consonants.include? word.first
+                letter = word.shift
+            else
+                consonant = false   
+            end
+        end
+        word << ending
+    end
+    word << "ay"
+    word.join ""
+end
